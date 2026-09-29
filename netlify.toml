@@ -1,0 +1,13 @@
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Allow embedding in Shopline. Tighten to your store domain later if desired.
+    Content-Security-Policy = "frame-ancestors 'self' https://*.shoplineapp.com https://*.shopline.com https://www.dearpet.tw https://dearpet.tw"
