@@ -5,3 +5,6 @@ dist/
 .DS_Store
 _xlsx_parse.txt
 .vite/
+
+# Local Netlify folder
+.netlify
