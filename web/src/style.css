@@ -12,8 +12,9 @@
   --error: #8b3a3a;
   --radius: 14px;
   --shadow: 0 10px 30px rgba(42, 36, 28, 0.06);
-  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Noto Serif TC", "Songti TC", serif;
-  line-height: 1.55;
+  --sans: "Microsoft JhengHei UI", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", "Noto Sans CJK TC", sans-serif;
+  font-family: var(--sans);
+  line-height: 1.5;
   font-weight: 400;
   color: var(--ink);
   background:
@@ -26,20 +27,27 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.9em;
+  overflow-wrap: anywhere;
 }
 
 .page {
-  width: min(720px, calc(100% - 2rem));
+  width: min(720px, 100%);
   margin: 0 auto;
-  padding: 1.75rem 0 3rem;
+  padding: 1.5rem max(1rem, env(safe-area-inset-right)) calc(2.75rem + env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
 }
 
 .hero {
@@ -52,14 +60,14 @@ code {
   text-transform: uppercase;
   font-size: 0.78rem;
   color: var(--accent);
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
 }
 
 .hero h1 {
   margin: 0 0 0.5rem;
-  font-size: clamp(1.7rem, 4vw, 2.2rem);
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-size: clamp(1.55rem, 4.2vw, 2.05rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.35;
 }
 
 .lead,
@@ -82,6 +90,7 @@ code {
   padding: 0.9rem 1rem;
   border-radius: var(--radius);
   margin-bottom: 1rem;
+  overflow-wrap: break-word;
 }
 
 .form {
@@ -90,18 +99,31 @@ code {
 }
 
 fieldset {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
   margin: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: color-mix(in srgb, var(--card) 92%, white);
-  padding: 1rem 1rem 1.1rem;
+  padding: 1rem 1.05rem 1.15rem;
   box-shadow: var(--shadow);
 }
 
 legend {
-  padding: 0 0.35rem;
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
-  font-size: 0.95rem;
+  float: none;
+  width: auto;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+legend + label,
+legend + .choice-group {
+  margin-top: 0.55rem;
 }
 
 .req {
@@ -111,34 +133,57 @@ legend {
 }
 
 label {
-  display: grid;
-  gap: 0.35rem;
-  margin-top: 0.75rem;
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
-  font-size: 0.92rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+label > span {
+  line-height: 1.4;
 }
 
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  gap: 0.85rem;
+  align-items: end;
 }
 
-@media (max-width: 560px) {
-  .row {
-    grid-template-columns: 1fr;
-  }
+.row > label {
+  margin-top: 0.85rem;
+  min-width: 0;
 }
 
 input[type="number"],
 select {
   width: 100%;
+  height: 48px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  padding: 0.7rem 0.8rem;
-  font: inherit;
-  background: #fff;
+  padding: 0 0.85rem;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.25;
+  background-color: #fff;
   color: var(--ink);
+}
+
+select {
+  appearance: none;
+  padding-right: 2.4rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%236b6256' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 12px 8px;
+}
+
+select:disabled {
+  color: var(--muted);
+  background-color: #f6f3ed;
 }
 
 input:focus,
@@ -148,32 +193,50 @@ select:focus {
 }
 
 .hint {
-  margin: 0.55rem 0 0;
+  margin: 0.6rem 0 0;
   font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .choice-group {
-  margin-top: 0.85rem;
+  margin-top: 0.95rem;
 }
 
 .choice-label {
-  margin: 0 0 0.35rem;
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
-  font-size: 0.92rem;
+  margin: 0 0 0.15rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
 .choice,
 .check {
-  display: flex;
+  flex-direction: row;
   align-items: flex-start;
-  gap: 0.55rem;
-  margin-top: 0.4rem;
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0.55rem 0.1rem;
+  min-height: 44px;
+  font-size: 1rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.choice span,
+.check span {
+  padding-top: 0.02rem;
+}
+
+.check {
+  margin-top: 0.75rem;
 }
 
 .choice input,
 .check input {
-  margin-top: 0.2rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0.18rem 0 0;
+  flex: none;
+  accent-color: var(--accent);
 }
 
 .submit {
@@ -181,9 +244,11 @@ select:focus {
   border-radius: 999px;
   background: var(--accent);
   color: #f7faf4;
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+  font-family: inherit;
   font-size: 1rem;
-  padding: 0.85rem 1.2rem;
+  line-height: 1.3;
+  min-height: 48px;
+  padding: 0.85rem 1.35rem;
   cursor: pointer;
 }
 
@@ -243,21 +308,24 @@ select:focus {
   display: flex;
   justify-content: space-between;
   gap: 0.75rem;
-  align-items: baseline;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .card h3 {
   margin: 0;
   font-size: 1.05rem;
+  line-height: 1.4;
+  min-width: 0;
 }
 
 .badge {
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
   font-size: 0.75rem;
+  line-height: 1.3;
   background: var(--accent);
   color: #f7faf4;
   border-radius: 999px;
-  padding: 0.2rem 0.55rem;
+  padding: 0.22rem 0.6rem;
   white-space: nowrap;
 }
 
@@ -274,9 +342,9 @@ select:focus {
 .tag {
   display: inline-block;
   margin-top: 0.45rem;
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
   font-size: 0.75rem;
-  padding: 0.15rem 0.45rem;
+  line-height: 1.3;
+  padding: 0.18rem 0.5rem;
   border-radius: 999px;
 }
 
@@ -292,6 +360,30 @@ select:focus {
 .foot {
   margin-top: 2rem;
   font-size: 0.85rem;
+  line-height: 1.6;
   border-top: 1px solid var(--line);
   padding-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding-top: 1.1rem;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  fieldset {
+    padding: 0.95rem 0.9rem 1.05rem;
+  }
+
+  .submit {
+    width: 100%;
+  }
+
+  .card {
+    padding: 0.9rem 0.9rem;
+  }
 }

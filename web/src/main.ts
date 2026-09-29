@@ -139,25 +139,25 @@ function renderAppShell() {
         <fieldset>
           <legend>寵物資料 <span class="req">必填</span></legend>
           <label>
-            種類
+            <span>種類</span>
             <select id="category" required>
               <option value="">請選擇</option>
               ${categories.map((c) => `<option value="${c}">${c}</option>`).join('')}
             </select>
           </label>
           <label>
-            品種
+            <span>品種</span>
             <select id="breed" required disabled>
               <option value="">請先選種類</option>
             </select>
           </label>
           <div class="row">
             <label>
-              健康時體重（kg）
+              <span>健康時體重（kg）</span>
               <input id="healthWeight" type="number" min="0.01" step="0.1" inputmode="decimal" placeholder="例如 4.5" />
             </label>
             <label>
-              離開前體重（kg）
+              <span>離開前體重（kg）</span>
               <input id="leaveWeight" type="number" min="0.01" step="0.1" inputmode="decimal" placeholder="選填，建議一併填" />
             </label>
           </div>
@@ -168,26 +168,26 @@ function renderAppShell() {
           <legend>處理方式 <span class="req">必填</span></legend>
           <div class="choice-group" role="radiogroup" aria-label="是否磨粉">
             <p class="choice-label">是否磨粉</p>
-            <label class="choice"><input type="radio" name="powdered" value="no" /> 不磨粉（保留骨骸）</label>
-            <label class="choice"><input type="radio" name="powdered" value="yes" /> 要磨粉</label>
+            <label class="choice"><input type="radio" name="powdered" value="no" /><span>不磨粉（保留骨骸）</span></label>
+            <label class="choice"><input type="radio" name="powdered" value="yes" /><span>要磨粉</span></label>
           </div>
           <div class="choice-group" role="radiogroup" aria-label="火化或水化">
             <p class="choice-label">火化或水化</p>
-            <label class="choice"><input type="radio" name="process" value="fire" /> 火化</label>
-            <label class="choice"><input type="radio" name="process" value="water" /> 水化</label>
-            <label class="choice"><input type="radio" name="process" value="undecided" /> 尚未決定（同時看兩種建議）</label>
+            <label class="choice"><input type="radio" name="process" value="fire" /><span>火化</span></label>
+            <label class="choice"><input type="radio" name="process" value="water" /><span>水化</span></label>
+            <label class="choice"><input type="radio" name="process" value="undecided" /><span>尚未決定（同時看兩種建議）</span></label>
           </div>
         </fieldset>
 
         <fieldset>
           <legend>選填</legend>
           <label>
-            年齡（歲）
+            <span>年齡（歲）</span>
             <input id="age" type="number" min="0" step="0.5" inputmode="decimal" placeholder="未填則以成年估算" />
           </label>
           <label class="check">
             <input id="keepsakes" type="checkbox" />
-            預計放入陪葬品／防潮袋（會多留空間）
+            <span>預計放入陪葬品／防潮袋（會多留空間）</span>
           </label>
         </fieldset>
 
